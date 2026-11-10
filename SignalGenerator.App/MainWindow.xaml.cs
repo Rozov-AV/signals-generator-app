@@ -102,26 +102,28 @@ namespace SignalGenerator.App
 
         private void SumButton_Click(object sender, RoutedEventArgs e)
         {
-            SingleChannelSignal sumSignal = Tools.SumSignals(_signalsList);
-            if (sumSignal == null)
+            try
             {
-                MessageBox.Show("Суммирование невозможно!", "Ошибка");
-                return;
+                SingleChannelSignal sumSignal = SignalOperations.Sum(_signalsList);
+                AddSignal(sumSignal);
             }
-
-            AddSignal(sumSignal);
+            catch (ArgumentException err)
+            {
+                MessageBox.Show($"Суммирование невозможно:\n{err.Message}", "Ошибка");
+            }
         }
 
         private void ConcatButton_Click(object sender, RoutedEventArgs e)
         {
-            SingleChannelSignal resSignal = Tools.ConcatSignals(_signalsList);
-            if (resSignal == null)
+            try
             {
-                MessageBox.Show("Склейка невозможна!", "Ошибка");
-                return;
+                SingleChannelSignal resSignal = SignalOperations.Concat(_signalsList);
+                AddSignal(resSignal);
             }
-
-            AddSignal(resSignal);
+            catch (ArgumentException err)
+            {
+                MessageBox.Show($"Склейка невозможна:\n{err.Message}", "Ошибка");
+            }
         }
 
         private void DerivativeButton_Click(object sender, RoutedEventArgs e)
@@ -159,7 +161,7 @@ namespace SignalGenerator.App
             SingleChannelSignal srcSignal = _signalsList.Last();
             float[] srcData = srcSignal.Data;
 
-            OnlineSingleChannelFilter filter = new OnlineSingleChannelFilter(
+            OnlineFilter filter = new OnlineFilter(
                 (int)(windowSize * srcSignal.Frequency + 0.5));
             int signalLength = srcData.Length;
             int portionLength = 10;
