@@ -51,6 +51,10 @@ namespace SignalGenerator.App
         private void Init()
         {
             _signalsList = new List<SingleChannelSignal>();
+
+            SignalTypeComboBox.ItemsSource = Enum.GetValues(typeof(SignalType));
+            SignalTypeComboBox.SelectedIndex = 0;
+
         }
 
         private void ResetPlot()
@@ -68,7 +72,45 @@ namespace SignalGenerator.App
             WpfPlot1.Refresh();
         }
 
-        private void SinButton_Click(object sender, RoutedEventArgs e)
+        private void SignalTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SinePanel.Visibility = Visibility.Collapsed;
+            LinePanel.Visibility = Visibility.Collapsed;
+            NoisePanel.Visibility = Visibility.Collapsed;
+
+            SignalType type = (SignalType)SignalTypeComboBox.SelectedItem;
+            switch (type)
+            {
+                case SignalType.Sine:
+                    SinePanel.Visibility = Visibility.Visible;
+                    break;
+                case SignalType.Line:
+                    LinePanel.Visibility = Visibility.Visible;
+                    break;
+                case SignalType.Noise:
+                    NoisePanel.Visibility = Visibility.Visible;
+                    break;
+            }
+        }
+
+        private void GenerateButton_Click(object sender, RoutedEventArgs e)
+        {
+            SignalType type = (SignalType)SignalTypeComboBox.SelectedItem;
+            switch (type)
+            {
+                case SignalType.Sine:
+                    SinButton_Click();
+                    break;
+                case SignalType.Line:
+                    LineButton_Click();
+                    break;
+                case SignalType.Noise:
+                    NoiseButton_Click();
+                    break;
+            }
+        }
+
+        private void SinButton_Click()
         {
             float length = float.Parse(SignalLengthTextBox.Text, CultureInfo.InvariantCulture);
             float freq = float.Parse(SignalFrequencyTextBox.Text, CultureInfo.InvariantCulture);
@@ -79,7 +121,7 @@ namespace SignalGenerator.App
             AddSignal(signal);
         }
 
-        private void LineButton_Click(object sender, RoutedEventArgs e)
+        private void LineButton_Click()
         {
             float length = float.Parse(SignalLengthTextBox.Text, CultureInfo.InvariantCulture);
             float freq = float.Parse(SignalFrequencyTextBox.Text, CultureInfo.InvariantCulture);
@@ -90,7 +132,7 @@ namespace SignalGenerator.App
             AddSignal(signal);
         }
 
-        private void NoiseButton_Click(object sender, RoutedEventArgs e)
+        private void NoiseButton_Click()
         {
             float length = float.Parse(SignalLengthTextBox.Text, CultureInfo.InvariantCulture);
             float freq = float.Parse(SignalFrequencyTextBox.Text, CultureInfo.InvariantCulture);
@@ -228,9 +270,7 @@ namespace SignalGenerator.App
             }
         }
 
-
         #endregion
 
-        
     }
 }

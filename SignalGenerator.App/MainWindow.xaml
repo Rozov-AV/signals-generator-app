@@ -16,48 +16,45 @@
         <ScottPlot:WpfPlot x:Name="WpfPlot1" Grid.Column="0" />
         <DockPanel Grid.Column="1" LastChildFill="False">
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                <ComboBox x:Name="SignalTypeComboBox"
+                    Width="90"
+                    HorizontalAlignment="Center"
+                    Margin="10,10,0,0"
+                    VerticalAlignment="Center" SelectionChanged="SignalTypeComboBox_SelectionChanged"/>
                 <Label Content="Длина (с):" Margin="10,10,0,0" Height="20" Padding="5,0,5,5"/>
                 <TextBox x:Name="SignalLengthTextBox" Margin="0,10,0,0" Text="20" Height="20" Width="30"/>
                 <Label Content="Частота (Гц):" Margin="10,10,0,0" Height="20" Padding="5,0,5,5"/>
                 <TextBox x:Name="SignalFrequencyTextBox" Margin="0,10,0,0" Text="200" Height="20" Width="30"/>
             </StackPanel>
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" VerticalAlignment="Top">
-                <Button x:Name="SinButton"
-                        Content="Sin"
-                        Width="50"
-                        HorizontalAlignment="Center"
-                        Margin="10,10,0,0"
-                        VerticalAlignment="Center"
-                        Click="SinButton_Click"/>
+            
+            <StackPanel x:Name="SinePanel" DockPanel.Dock="Top" Visibility="Visible" Orientation="Horizontal" VerticalAlignment="Top">
                 <Label Content="Период (с):" Margin="10,10,0,0" Height="20" Padding="5,0,5,5"/>
                 <TextBox x:Name="SinPeriodTextBox" Margin="0,10,0,0" Text="1" Height="20" Width="30"/>
                 <Label Content="Фаза (с):" Margin="10,10,0,0" Height="20" Padding="5,0,5,5"/>
                 <TextBox x:Name="SinPhaseTextBox" Margin="0,10,0,0" Text="0" Height="20" Width="30"/>
             </StackPanel>
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" VerticalAlignment="Top">
-                <Button x:Name="LineButton"
-                    Content="Прямая"
-                    Width="50"
-                    HorizontalAlignment="Center"
-                    Margin="10,10,0,0"
-                    VerticalAlignment="Center" Click="LineButton_Click"/>
+
+            <StackPanel x:Name="LinePanel" DockPanel.Dock="Top" Visibility="Collapsed" Orientation="Horizontal" VerticalAlignment="Top">
                 <Label Content="k:" Margin="10,10,0,0" Height="20" Padding="5,0,5,5"/>
                 <TextBox x:Name="KTextBox" Margin="0,10,0,0" Text="1" Height="20" Width="30"/>
                 <Label Content="b:" Margin="10,10,0,0" Height="20" Padding="5,0,5,5"/>
                 <TextBox x:Name="BTextBox" Margin="0,10,0,0" Text="2" Height="20" Width="30"/>
             </StackPanel>
-            
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" VerticalAlignment="Top">
-                <Button x:Name="NoiseButton"
-                    Content="Шум"
-                    Width="50"
-                    HorizontalAlignment="Center"
-                    Margin="10,10,0,0"
-                    VerticalAlignment="Center" Click="NoiseButton_Click"/>
+
+            <StackPanel x:Name="NoisePanel" DockPanel.Dock="Top" Visibility="Collapsed" Orientation="Horizontal" VerticalAlignment="Top">
                 <Label Content="Амплитуда:" Margin="10,10,0,0" Height="20" Padding="5,0,5,5"/>
                 <TextBox x:Name="NoiseAmplitudeTextBox" Margin="0,10,0,0" Text="0.1" Height="20" Width="30"/>
             </StackPanel>
-            
+
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" VerticalAlignment="Top">
+                <Button x:Name="GenerateButton"
+                    Content="Сгенерировать"
+                    Width="90"
+                    HorizontalAlignment="Center"
+                    Margin="10,10,0,0"
+                    VerticalAlignment="Center" Click="GenerateButton_Click"/>
+            </StackPanel>
+
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
                 <Button x:Name="ResetButton"
                     Content="Сброс"
